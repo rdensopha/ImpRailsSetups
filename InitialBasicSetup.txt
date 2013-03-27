@@ -1,0 +1,83 @@
+#gems used
+
+gem 'bootstrap-sass','~>2.3.0.1'
+group :development do
+
+	gem 'better_errors'
+	gem 'binding_of_caller'
+	gem 'meta_request'
+end	
+
+gem 'jquery-rails'
+
+gem 'simple_form'
+
+gem 'httparty'
+
+gem 'rolify'
+
+gem 'rb-readline'
+
+gem 'cancan'
+
+
+
+
+
+#steps involved
+1)rename as application.css.scss
+2)create bootstrap_and_overrides.css.scss 
+  => @import "bootstrap";
+  => @import "bootstrap-responsive";
+  => body {padding-top: 60px}
+3)include @import "bootstrap" where ever required
+
+4)for application.js
+  => //= require bootstrap
+    
+
+Directory Structure in app directory:
+--------------------------------------
+app--
+   assets--
+         images--
+               checkbox.png
+               radio.png
+               rails.png
+         javascripts--
+                    application.js
+                    custom_checkbox_and_radio.js
+                    custom_radio.js
+                    jquery-ui-1.10.0.custom.min.js
+         stylesheets--
+                    application.css.scss
+                    bootstrap_and_overrides.css.scss
+                    flat-ui.css.scss.erb
+                    restaurants.css.scss
+
+
+
+
+Setup to use postgres db
+-------------------------
+1)Install Postgres
+2)Set Path variable to point ...\PostgreSQL\bin  and ...\PostgreSQL\lib
+3)create project with rails new appname -d postgresql
+4)change configuration paraeters in config/database.yml
+--development:
+  adapter: postgresql
+  encoding: unicode
+  database: mydb
+  pool: 5
+  host: localhost
+  port: 5433
+  username: postgres
+  password: root
+
+5)Change in to application direcory and run the command
+bundle config build.pg --with-pg-config=<installation of PostgreSQL>\bin\pg_config.exe
+
+6)bundle install
+
+7) rake db:create
+
