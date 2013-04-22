@@ -1,0 +1,88 @@
+Imp steps to set up a basic app on Heroku:
+
+1)  The project which you want to host on heroku must be version controlled with Git.
+
+2)  Find out the accounts on Heroku: use the command -- heroku accounts
+
+3)  change in to directory of the project  -- cd ~\myproject
+
+4)  heroku accounts:set <<account-name>> ; from now on all heroku commands run from this directory , use the set account.
+
+5)  create a app on heroku from the project , --- heroku create <<app-name>>
+
+6)  heroku apps -- gives the list of apps.
+
+7)  pushing your code on heroku -- git push heroku master
+
+8)  to find out how many dyno are running -- heroku ps
+
+9)  to scale the dyno -- heroku scale web=10 scheduler=1 worker=5
+
+Setting up the Environment:
+----------------------------
+
+10) to see the list of config variables -- heroku config
+
+11) to create a new config variable -- heroku config:set GITHUB_API=<<....>>
+
+12) to unset a config variable -- heroku config:unset GITHUB_API
+
+ Addons
+ ------
+13) to find the list of addons provisioned -- heroku addons
+
+14) to add a new addon -- heroku addons:add openredis:micro
+
+15) to upgrade an addon -- heroku addons:upgrade openredis:medium
+
+16) to downgrade an addon -- heroku addons:upgrade openredis:micro
+
+17) to remove an addon -- heroku addons:remove openredis:micro
+
+POSTGRES configuration
+----------------------
+
+18) add postgres database -- heroku addons:add heroku-postgresql:dev
+
+19) A new config parameter is assigned which can be used-- heroku config | grep HEROKU_POSTGRESQL
+
+20) to establish primary database; so the db url is now accessible as env variable DATABASE_URL -- heroku pg:promote HEROKU_POSTGRESQL_RED_URL
+
+21) To get info about the data base -- heroku pg:info
+
+22) To get access to db credentials -- heroku pg:credentials DATABASE (for the credentials of primary database)
+
+23) when rails app is pushed to heroku it automatically generates a database.yml and uses that to configure the heroku postgres db.
+
+24) to run the database up to the latest migration run the rake task -- heroku run rake db:migrate
+
+25) After running  the migration, run -- heroku restart , to reload the schema and pickup any schema changes.
+
+26) To push seed data on to heroku postgres --- heroku db:push <<local db url>>
+
+27) To reset the database, will destroy all the tables -- heroku pg:reset DATABASE --confirm <<app-name>>
+
+28) to get from a backup -- heroku pgbackups:restore DATABASE '<<probably amazon s3 url>>'
+
+
+
+Assets Precompiling
+====================
+
+ 1) Always better to precompile assets locally and push the compilied assets to Heroku
+
+ 2)To do that in config/application.rb add this --- config.assets.initialize_on_precompile = false
+
+ 3)then run this command on the local machine -- bundle exec rake assets:precompile RAILS_ENV=production
+
+
+ Environment Configuration
+ -------------------------
+
+  1) rake figaro:heroku [app-name]
+
+
+  Access the console on Heroku
+  -----------------------------
+
+  heroku run console
