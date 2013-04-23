@@ -8,9 +8,24 @@ Imp steps to set up a basic app on Heroku:
 
 4)  heroku accounts:set <<account-name>> ; from now on all heroku commands run from this directory , use the set account.
 
-5)  create a app on heroku from the project , --- heroku create <<app-name>>
+5)  create a app on heroku from the project ,
+    we need to create atleast two environments 1) staging environment  2) production environment
+    heroku create <<app-name>> --remote production
+    heroku create <<staging-app-name>> --remote staging
 
-6)  heroku apps -- gives the list of apps.
+    to check all the remotes -- git remote -v
+
+    from now on all commands must be appended by either <<--remote prodction>> or <<--remote staging>>
+
+    to configure a default -- git config heroku.remote <<remote-name>>
+
+    for the environments to kick in -- 
+
+    add staging.rb in <<app>>/config/environments/staging.rb  same as production.rb
+
+    Then -- heroku config:set RACK_ENV=staging RAILS_ENV=staging --remote staging
+
+6)  heroku apps -- gives the list of apps ; for much more detailed info -- heroku apps:info
 
 7)  pushing your code on heroku -- git push heroku master
 
